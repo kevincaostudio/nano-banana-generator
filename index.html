@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nano Banana - 重新定义AI图像生成</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-yellow: #FFD700;
+            --dark-yellow: #FFA500;
+            --light-yellow: #FFEB3B;
+            --bg-black: #0a0a0a;
+            --card-black: #1a1a1a;
+            --text-white: #ffffff;
+            --text-gray: #b0b0b0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--primary-yellow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-yellow);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-yellow);
+        }
+
+        /* 主标题区 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--bg-black) 0%, #1a0a0a 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1620712943543-39c9996c3e4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+            animation: slowZoom 20s ease-in-out infinite alternate;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, var(--primary-yellow) 0%, transparent 50%);
+            opacity: 0.1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--light-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px var(--primary-yellow),
+                           0 0 40px rgba(255, 215, 0, 0.5);
+            }
+            to {
+                text-shadow: 0 0 30px var(--primary-yellow),
+                           0 0 50px var(--dark-yellow),
+                           0 0 60px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--dark-yellow) 100%);
+            color: var(--bg-black);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        /* 内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--primary-yellow);
+        }
+
+        .demo-section {
+            background: var(--card-black);
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 2rem auto;
+            max-width: 800px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .demo-title {
+            font-size: 1.5rem;
+            color: var(--primary-yellow);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .demo-description {
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .demo-highlight {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 3px solid var(--primary-yellow);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--card-black);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-yellow);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-yellow);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-yellow);
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+        }
+
+        /* 页脚 */
+        footer {
+            background: #000;
+            padding: 3rem 0;
+            border-top: 1px solid var(--primary-yellow);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-yellow);
+        }
+
+        .footer-bottom {
+            color: var(--text-gray);
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content::before {
+                top: -10px;
+                left: -10px;
+                right: -10px;
+                bottom: -10px;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .demo-section {
+                padding: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-banana"></i>
+                Nano Banana
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">功能</a></li>
+                <li><a href="#demo">演示</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主标题区 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>听得懂、改得准、字写得好</h1>
+            <p class="tagline">Google最新一代图像生成模型，让创意触手可及</p>
+            <a href="#demo" class="cta-button">立即体验</a>
+        </div>
+    </section>
+
+    <!-- 演示区域 -->
+    <section class="section" id="demo">
+        <div class="container">
+            <h2 class="section-title">体验Nano Banana</h2>
+            <div class="demo-section">
+                <h3 class="demo-title">🚀 本地体验完整功能</h3>
+                <p class="demo-description">
+                    Nano Banana 图片生成器支持强大的AI图像生成功能。要体验完整的交互式图片生成，
+                    请在本地运行我们的应用程序。
+                </p>
+                <div class="demo-highlight">
+                    <h4>✨ 主要功能：</h4>
+                    <ul>
+                        <li>文生图：用自然语言描述生成高质量图像</li>
+                        <li>图像编辑：精准修改图片特定部分</li>
+                        <li>文字渲染：清晰准确地渲染中文字符</li>
+                        <li>多图合成：无缝融合多张图片元素</li>
+                    </ul>
+                </div>
+                <div class="demo-highlight">
+                    <h4>🛠️ 本地运行步骤：</h4>
+                    <ol>
+                        <li>克隆项目：<code>git clone https://github.com/kevincaostudio/nano-banana-generator.git</code></li>
+                        <li>安装依赖：<code>npm install</code></li>
+                        <li>启动服务：<code>npm start</code></li>
+                        <li>打开浏览器访问：<code>http://localhost:3000</code></li>
+                        <li>使用Live Server打开：<code>Nano_Banana_Landing.html</code></li>
+                    </ol>
+                </div>
+                <p class="demo-description">
+                    <strong>注意：</strong>图片生成功能需要本地运行，因为它需要调用Replicate API。
+                    在线版本仅用于展示产品介绍和使用说明。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能展示 -->
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="section-title">核心功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>文生图</h3>
+                    <p>用自然语言描述画面，Nano Banana能将其转化为高质量图像。支持长描述和抽象概念转化。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>图像编辑</h3>
+                    <p>上传图片进行精准局部修改，保持整体风格一致。支持风格迁移和多图合成。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h3>文字渲染</h3>
+                    <p>突破性技术，清晰准确的中文文字渲染。告别AI乱码，完美呈现海报文字场景。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>多图合成</h3>
+                    <p>参考多张图片的构图和风格，融合成全新创作。智能调整光影色调，实现无缝融合。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>高速生成</h3>
+                    <p>Flash版本核心模型，生成效率极高，无需长时间等待，即时获得创意成果。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>安全合规</h3>
+                    <p>内置合规护栏，自动过滤不当内容，确保生成的图像符合安全准则和伦理要求。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/kevincaostudio/nano-banana-generator" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="#" onclick="alert('请联系邮箱：example@email.com')">
+                    <i class="fas fa-envelope"></i> 联系我们
+                </a>
+                <a href="#" onclick="alert('文档正在编写中')">
+                    <i class="fas fa-book"></i> 文档
+                </a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Nano Banana. Powered by Google. All rights reserved.</p>
+                <p>本项目仅用于演示目的</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
