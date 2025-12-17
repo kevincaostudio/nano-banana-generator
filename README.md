@@ -29,3 +29,11 @@ npm start
 由于浏览器的CORS安全策略，前端无法直接调用 Replicate API。代理服务器作为一个中间层，将请求转发到 Replicate API，避免了跨域问题。
 
 代理服务器会从 `.env` 文件读取 API 密钥，确保密钥安全。
+## 更新状态
+
+✅ Vercel部署配置已优化
+✅ 服务器文件已清理
+✅ 静态部署配置完成
+
+访问地址：https://nano-banana-generator-rho.vercel.app/
+
