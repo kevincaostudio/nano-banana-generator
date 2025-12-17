@@ -315,6 +315,220 @@
             border-top: 1px solid rgba(255, 215, 0, 0.1);
         }
 
+        /* 演示界面样式 */
+        .demo-interface {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .demo-input, .demo-output {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .demo-input h4, .demo-output h4 {
+            color: var(--primary-yellow);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .demo-textarea {
+            width: 100%;
+            min-height: 120px;
+            background: var(--bg-black);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .demo-examples {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .example-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .example-btn {
+            padding: 0.4rem 0.8rem;
+            background: transparent;
+            border: 1px solid var(--primary-yellow);
+            color: var(--text-gray);
+            border-radius: 20px;
+            cursor: not-allowed;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .example-btn:not(:disabled):hover {
+            background: var(--primary-yellow);
+            color: var(--bg-black);
+        }
+
+        .demo-generate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%);
+            color: var(--text-gray);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: not-allowed;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .demo-generate-btn:not(:disabled):hover {
+            background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--dark-yellow) 100%);
+            color: var(--bg-black);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .demo-image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: var(--bg-black);
+            border: 2px dashed rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--text-gray);
+        }
+
+        .demo-image-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .demo-image-placeholder p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-image-placeholder small {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .demo-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .demo-action-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            color: var(--text-gray);
+            border-radius: 8px;
+            cursor: not-allowed;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .demo-action-btn:not(:disabled):hover {
+            background: var(--primary-yellow);
+            color: var(--bg-black);
+            border-color: var(--primary-yellow);
+        }
+
+        /* 运行步骤样式 */
+        .run-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border-left: 3px solid var(--primary-yellow);
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-yellow);
+            color: var(--bg-black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content strong {
+            color: var(--primary-yellow);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content code {
+            background: var(--bg-black);
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            display: block;
+            word-break: break-all;
+        }
+
+        .demo-note {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .demo-note i {
+            color: var(--primary-yellow);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .demo-note p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
         /* 响应式设计 */
         @media (max-width: 768px) {
             .nav-links {
@@ -342,6 +556,20 @@
 
             .demo-section {
                 padding: 2rem;
+            }
+
+            .demo-interface {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .demo-actions {
+                flex-direction: column;
+            }
+
+            .demo-action-btn {
+                width: 100%;
+                justify-content: center;
             }
 
             .features-grid {
@@ -375,39 +603,110 @@
         </div>
     </section>
 
-    <!-- 演示区域 -->
+    <!-- 图片生成器演示 -->
     <section class="section" id="demo">
         <div class="container">
             <h2 class="section-title">体验Nano Banana</h2>
             <div class="demo-section">
-                <h3 class="demo-title">🚀 本地体验完整功能</h3>
+                <h3 class="demo-title">🖼️ AI图片生成器</h3>
                 <p class="demo-description">
-                    Nano Banana 图片生成器支持强大的AI图像生成功能。要体验完整的交互式图片生成，
-                    请在本地运行我们的应用程序。
+                    Nano Banana 集成了Google最新的图像生成技术，支持强大的AI图像生成功能。
                 </p>
+
+                <!-- 演示界面 -->
+                <div class="demo-interface">
+                    <div class="demo-input">
+                        <h4>💭 输入您的创意描述</h4>
+                        <div class="demo-textarea" contenteditable="false" placeholder="例如：一只戴着太空头盔的橙色小猫，背景是赛博朋克风格的城市街道...">
+                            想象一下：一只戴着太空头盔的橘猫，漂浮在赛博朋克城市的霓虹灯下...
+                        </div>
+                        <div class="demo-examples">
+                            <span class="example-label">示例：</span>
+                            <button class="example-btn" disabled>赛博朋克猫咪</button>
+                            <button class="example-btn" disabled>梦幻森林城堡</button>
+                            <button class="example-btn" disabled>未来城市风光</button>
+                        </div>
+                        <button class="demo-generate-btn" disabled>
+                            <i class="fas fa-magic"></i>
+                            生成图片 (需要本地运行)
+                        </button>
+                    </div>
+
+                    <div class="demo-output">
+                        <h4>✨ 生成结果预览</h4>
+                        <div class="demo-image-placeholder">
+                            <i class="fas fa-image"></i>
+                            <p>图片生成预览区域</p>
+                            <small>本地运行后将在此显示生成的图片</small>
+                        </div>
+                        <div class="demo-actions">
+                            <button class="demo-action-btn" disabled>
+                                <i class="fas fa-download"></i>
+                                下载图片
+                            </button>
+                            <button class="demo-action-btn" disabled>
+                                <i class="fas fa-redo"></i>
+                                重新生成
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="demo-highlight">
-                    <h4>✨ 主要功能：</h4>
+                    <h4>🎯 核心技术特点：</h4>
                     <ul>
-                        <li>文生图：用自然语言描述生成高质量图像</li>
-                        <li>图像编辑：精准修改图片特定部分</li>
-                        <li>文字渲染：清晰准确地渲染中文字符</li>
-                        <li>多图合成：无缝融合多张图片元素</li>
+                        <li><strong>听得懂：</strong>精准理解复杂的自然语言描述</li>
+                        <li><strong>改得准：</strong>支持图像局部编辑和精确修改</li>
+                        <li><strong>字写得好：</strong>突破性的中文文字渲染技术</li>
+                        <li><strong>速度快：</strong>Flash版本核心模型，秒级生成</li>
                     </ul>
                 </div>
+
                 <div class="demo-highlight">
-                    <h4>🛠️ 本地运行步骤：</h4>
-                    <ol>
-                        <li>克隆项目：<code>git clone https://github.com/kevincaostudio/nano-banana-generator.git</code></li>
-                        <li>安装依赖：<code>npm install</code></li>
-                        <li>启动服务：<code>npm start</code></li>
-                        <li>打开浏览器访问：<code>http://localhost:3000</code></li>
-                        <li>使用Live Server打开：<code>Nano_Banana_Landing.html</code></li>
-                    </ol>
+                    <h4>🚀 本地运行完整功能：</h4>
+                    <div class="run-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>克隆项目</strong>
+                                <code>git clone https://github.com/kevincaostudio/nano-banana-generator.git</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>安装依赖</strong>
+                                <code>cd nano-banana-generator && npm install</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>配置API密钥</strong>
+                                <code>编辑 .env 文件，添加您的 Replicate API Key</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <strong>启动服务</strong>
+                                <code>npm start</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <strong>开始创作</strong>
+                                <code>访问 http://localhost:3000 或用Live Server打开 Nano_Banana_Landing.html</code>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="demo-description">
-                    <strong>注意：</strong>图片生成功能需要本地运行，因为它需要调用Replicate API。
-                    在线版本仅用于展示产品介绍和使用说明。
-                </p>
+
+                <div class="demo-note">
+                    <i class="fas fa-info-circle"></i>
+                    <p><strong>重要说明：</strong>由于API安全性和跨域限制，图片生成功能需要在本地环境中运行。在线版本仅用于功能展示和产品介绍。</p>
+                </div>
             </div>
         </div>
     </section>
