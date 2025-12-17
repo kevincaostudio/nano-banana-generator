@@ -346,6 +346,14 @@
             color: var(--text-white);
             margin-bottom: 1rem;
             line-height: 1.6;
+            resize: vertical;
+            transition: all 0.3s;
+        }
+
+        .demo-textarea:focus {
+            outline: none;
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
         }
 
         .demo-examples {
@@ -365,28 +373,29 @@
             padding: 0.4rem 0.8rem;
             background: transparent;
             border: 1px solid var(--primary-yellow);
-            color: var(--text-gray);
+            color: var(--primary-yellow);
             border-radius: 20px;
-            cursor: not-allowed;
+            cursor: pointer;
             transition: all 0.3s;
             font-size: 0.8rem;
         }
 
-        .example-btn:not(:disabled):hover {
+        .example-btn:hover {
             background: var(--primary-yellow);
             color: var(--bg-black);
+            transform: translateY(-2px);
         }
 
         .demo-generate-btn {
             width: 100%;
             padding: 1rem;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%);
-            color: var(--text-gray);
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--dark-yellow) 100%);
+            color: var(--bg-black);
+            border: none;
             border-radius: 10px;
             font-size: 1.1rem;
             font-weight: bold;
-            cursor: not-allowed;
+            cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
@@ -394,11 +403,9 @@
             gap: 0.5rem;
         }
 
-        .demo-generate-btn:not(:disabled):hover {
-            background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--dark-yellow) 100%);
-            color: var(--bg-black);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        .demo-generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
         }
 
         .demo-image-placeholder {
@@ -440,10 +447,10 @@
         .demo-action-btn {
             padding: 0.8rem 1.5rem;
             background: transparent;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            color: var(--text-gray);
+            border: 2px solid var(--primary-yellow);
+            color: var(--primary-yellow);
             border-radius: 8px;
-            cursor: not-allowed;
+            cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
@@ -451,10 +458,20 @@
             font-size: 0.9rem;
         }
 
-        .demo-action-btn:not(:disabled):hover {
+        .demo-action-btn:hover {
             background: var(--primary-yellow);
             color: var(--bg-black);
             border-color: var(--primary-yellow);
+        }
+
+        .demo-action-btn.secondary {
+            border-color: rgba(255, 215, 0, 0.5);
+            color: rgba(255, 215, 0, 0.8);
+        }
+
+        .demo-action-btn.secondary:hover {
+            border-color: var(--primary-yellow);
+            color: var(--bg-black);
         }
 
         /* 运行步骤样式 */
@@ -527,6 +544,44 @@
         .demo-note p {
             margin: 0;
             line-height: 1.6;
+        }
+
+        /* 演示加载动画 */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 215, 0, 0.2);
+            border-top: 3px solid var(--primary-yellow);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .demo-generated-image {
+            text-align: center;
+            color: var(--text-white);
+        }
+
+        .demo-generated-image i {
+            font-size: 3rem;
+            color: var(--primary-yellow);
+            margin-bottom: 1rem;
+        }
+
+        .demo-generated-image p {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-yellow);
+        }
+
+        .demo-generated-image small {
+            color: var(--text-gray);
+            font-size: 0.9rem;
         }
 
         /* 响应式设计 */
@@ -617,36 +672,34 @@
                 <div class="demo-interface">
                     <div class="demo-input">
                         <h4>💭 输入您的创意描述</h4>
-                        <div class="demo-textarea" contenteditable="false" placeholder="例如：一只戴着太空头盔的橙色小猫，背景是赛博朋克风格的城市街道...">
-                            想象一下：一只戴着太空头盔的橘猫，漂浮在赛博朋克城市的霓虹灯下...
-                        </div>
+                        <textarea id="demoPromptInput" class="demo-textarea" placeholder="例如：一只戴着太空头盔的橙色小猫，背景是赛博朋克风格的城市街道...">想象一下：一只戴着太空头盔的橘猫，漂浮在赛博朋克城市的霓虹灯下...</textarea>
                         <div class="demo-examples">
                             <span class="example-label">示例：</span>
-                            <button class="example-btn" disabled>赛博朋克猫咪</button>
-                            <button class="example-btn" disabled>梦幻森林城堡</button>
-                            <button class="example-btn" disabled>未来城市风光</button>
+                            <button class="example-btn" onclick="setDemoExample('一只戴着宇航员头盔的橘猫，背景是赛博朋克风格的街道')">赛博朋克猫咪</button>
+                            <button class="example-btn" onclick="setDemoExample('梦幻森林中的魔法城堡，月光洒在塔楼上')">梦幻森林城堡</button>
+                            <button class="example-btn" onclick="setDemoExample('未来城市的飞行汽车在霓虹灯街道上穿梭')">未来城市风光</button>
                         </div>
-                        <button class="demo-generate-btn" disabled>
+                        <button class="demo-generate-btn" onclick="demoGenerateImage()">
                             <i class="fas fa-magic"></i>
-                            生成图片 (需要本地运行)
+                            生成图片
                         </button>
                     </div>
 
                     <div class="demo-output">
                         <h4>✨ 生成结果预览</h4>
-                        <div class="demo-image-placeholder">
+                        <div id="demoImageResult" class="demo-image-placeholder">
                             <i class="fas fa-image"></i>
                             <p>图片生成预览区域</p>
-                            <small>本地运行后将在此显示生成的图片</small>
+                            <small>在本地环境中将显示生成的图片</small>
                         </div>
                         <div class="demo-actions">
-                            <button class="demo-action-btn" disabled>
+                            <button id="demoDownloadBtn" class="demo-action-btn" onclick="demoDownload()" style="display: none;">
                                 <i class="fas fa-download"></i>
                                 下载图片
                             </button>
-                            <button class="demo-action-btn" disabled>
-                                <i class="fas fa-redo"></i>
-                                重新生成
+                            <button class="demo-action-btn secondary" onclick="showDemoInfo()">
+                                <i class="fas fa-info-circle"></i>
+                                了解如何使用
                             </button>
                         </div>
                     </div>
@@ -812,6 +865,83 @@
 
             lastScroll = currentScroll;
         });
+
+        // 演示功能
+        let demoPrompt = '';
+
+        // 设置示例提示词
+        function setDemoExample(prompt) {
+            document.getElementById('demoPromptInput').value = prompt;
+            demoPrompt = prompt;
+        }
+
+        // 演示生成图片
+        async function demoGenerateImage() {
+            const prompt = document.getElementById('demoPromptInput').value.trim();
+
+            if (!prompt) {
+                alert('请输入图片描述');
+                return;
+            }
+
+            demoPrompt = prompt;
+
+            // 模拟加载状态
+            const imageResult = document.getElementById('demoImageResult');
+            const downloadBtn = document.getElementById('demoDownloadBtn');
+
+            imageResult.innerHTML = `
+                <div class="spinner"></div>
+                <p>正在生成图片，请稍候...</p>
+                <small>这是一个演示版本，实际生成需要在本地运行</small>
+            `;
+            imageResult.style.display = 'flex';
+            downloadBtn.style.display = 'none';
+
+            // 模拟生成延迟
+            setTimeout(() => {
+                showDemoResult();
+            }, 2000);
+        }
+
+        // 显示演示结果
+        function showDemoResult() {
+            const imageResult = document.getElementById('demoImageResult');
+            const downloadBtn = document.getElementById('demoDownloadBtn');
+
+            imageResult.innerHTML = `
+                <div class="demo-generated-image">
+                    <i class="fas fa-image"></i>
+                    <p>图片生成完成！</p>
+                    <small>在本地环境中，这里将显示实际生成的图片</small>
+                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 215, 0, 0.1); border-radius: 8px; border-left: 3px solid var(--primary-yellow);">
+                        <strong>您的创意描述：</strong><br>
+                        "${demoPrompt}"
+                    </div>
+                </div>
+            `;
+            downloadBtn.style.display = 'flex';
+        }
+
+        // 演示下载功能
+        function demoDownload() {
+            alert('这是演示版本。要下载实际生成的图片，请在本地环境中运行完整功能。\n\n请参考页面的"本地运行完整功能"部分了解如何设置。');
+        }
+
+        // 显示使用说明
+        function showDemoInfo() {
+            const info = `🚀 如何使用完整功能：
+
+1. 克隆项目：git clone https://github.com/kevincaostudio/nano-banana-generator.git
+2. 安装依赖：npm install
+3. 配置API密钥：编辑 .env 文件
+4. 启动服务：npm start
+5. 访问：http://localhost:3000
+
+完整功能支持实际的AI图片生成和下载！`;
+
+            alert(info);
+        }
     </script>
 </body>
 </html>
